@@ -5,415 +5,436 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>África Viva — Doe Agora</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,700;0,900;1,300;1,900&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;0,900;1,300&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
-:root {
-  --earth: #c4622d;
-  --sand: #f0e6d3;
-  --dark: #1a1208;
-  --amber: #e8973a;
-  --cream: #faf6ee;
-  --muted: #8a7a65;
-  --white: #ffffff;
+:root{
+  --earth:#c4622d;
+  --amber:#e8973a;
+  --dark:#1a1208;
+  --cream:#faf6ee;
+  --sand:#f0e6d3;
+  --muted:#8a7a65;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
-body{font-family:'Instrument Sans',sans-serif;background:var(--cream);color:var(--dark);overflow-x:hidden;}
+body{font-family:'Instrument Sans',sans-serif;background:var(--dark);color:#fff;overflow-x:hidden;}
 
-/* HERO */
-.hero{min-height:100vh;position:relative;display:flex;align-items:center;overflow:hidden;}
-.hero-bg{
+/* ══ HERO ══ */
+.hero{
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+}
+
+/* FOTO lado esquerdo */
+.hero-left{position:relative;overflow:hidden;}
+.hero-left img.bg{
+  width:100%;height:100%;
+  object-fit:cover;object-position:center top;
+  display:block;
+  filter:brightness(.55) saturate(1.1);
+}
+.hero-left-overlay{
   position:absolute;inset:0;
-  background-image:url('foto1.png');
-  background-size:cover;
-  background-position:center 25%;
-  filter:brightness(0.38) saturate(1.2);
-}
-.hero-grain{position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");opacity:.5;pointer-events:none;}
-.hero-grad{position:absolute;inset:0;background:linear-gradient(105deg,rgba(26,18,8,.97) 0%,rgba(26,18,8,.75) 50%,rgba(196,98,45,.1) 100%);}
-
-/* Africa SVG continent watermark */
-.africa-watermark{
-  position:absolute;
-  right:-40px; top:50%;
-  transform:translateY(-50%);
-  width:520px; height:520px;
-  opacity:0.06;
-  pointer-events:none;
-  z-index:1;
+  background:linear-gradient(to right,transparent 55%,rgba(26,18,8,.95) 100%),
+             linear-gradient(to bottom,rgba(26,18,8,.35) 0%,transparent 25%);
 }
 
-.hero-content{position:relative;z-index:2;display:flex;flex-direction:column;justify-content:center;padding:80px 8vw;max-width:820px;animation:fadeUp .9s ease both;}
-@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
-.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:.72rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:24px;}
-.eyebrow::before{content:'';display:block;width:28px;height:2px;background:var(--amber);}
-.hero-title{font-family:'Fraunces',serif;font-size:clamp(3rem,6.5vw,5.6rem);font-weight:900;line-height:.95;color:#fff;margin-bottom:28px;letter-spacing:-2px;}
+.hero-logo{
+  position:absolute;top:24px;left:24px;
+  display:flex;align-items:center;gap:12px;z-index:10;
+}
+.hero-logo img{
+  width:64px;height:64px;object-fit:contain;border-radius:10px;
+  filter:drop-shadow(0 4px 16px rgba(0,0,0,.5));
+}
+.hero-logo-name{font-family:'Fraunces',serif;font-size:1.35rem;font-weight:900;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.6);line-height:1;}
+.hero-logo-sub{font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-top:3px;}
+
+.urgency-badge{
+  position:absolute;top:24px;right:24px;
+  background:#8b0000;border-radius:50px;
+  padding:7px 13px;display:flex;align-items:center;gap:7px;
+  font-size:.7rem;font-weight:600;color:#fff;letter-spacing:.3px;
+  z-index:10;
+}
+.udot{width:7px;height:7px;background:#ff4444;border-radius:50%;animation:pdot 1.4s ease-in-out infinite;flex-shrink:0;}
+@keyframes pdot{0%,100%{box-shadow:0 0 0 0 rgba(255,68,68,.6)}50%{box-shadow:0 0 0 7px rgba(255,68,68,0)}}
+
+.photo-caption{
+  position:absolute;bottom:28px;left:24px;right:24px;
+  background:rgba(0,0,0,.5);backdrop-filter:blur(8px);
+  border-radius:10px;padding:14px 16px;
+  border-left:3px solid var(--earth);
+}
+.photo-caption p{font-size:.8rem;color:rgba(255,255,255,.85);line-height:1.5;}
+.photo-caption span{font-size:.65rem;color:rgba(255,255,255,.38);margin-top:4px;display:block;letter-spacing:1px;}
+
+/* FORM lado direito */
+.hero-right{
+  background:var(--dark);
+  display:flex;flex-direction:column;justify-content:center;
+  padding:56px 48px;overflow-y:auto;
+}
+
+.hero-eyebrow{
+  font-size:.65rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;
+  color:var(--amber);margin-bottom:14px;
+  display:flex;align-items:center;gap:10px;
+}
+.hero-eyebrow::before{content:'';width:22px;height:2px;background:var(--amber);}
+
+.hero-title{
+  font-family:'Fraunces',serif;
+  font-size:clamp(1.8rem,3vw,2.8rem);
+  font-weight:900;line-height:1;
+  margin-bottom:8px;letter-spacing:-1px;
+}
 .hero-title em{font-style:italic;color:var(--amber);font-weight:300;}
-.hero-desc{font-size:1.05rem;color:rgba(255,255,255,.72);line-height:1.75;max-width:460px;margin-bottom:44px;}
-.hero-cta{display:inline-flex;align-items:center;gap:12px;background:var(--earth);color:#fff;font-size:1rem;font-weight:600;padding:18px 36px;border-radius:4px;text-decoration:none;transition:background .2s,transform .2s;width:fit-content;}
-.hero-cta:hover{background:#a84e22;transform:translateY(-2px);}
-.hero-cta span{transition:transform .2s;}
-.hero-cta:hover span{transform:translateX(4px);}
-.hero-nums{display:flex;gap:48px;margin-top:52px;flex-wrap:wrap;}
-.hnum-val{font-family:'Fraunces',serif;font-size:2rem;font-weight:900;color:var(--amber);display:block;line-height:1;}
-.hnum-lbl{font-size:.68rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:4px;}
 
-/* URGENCY */
-.ticker{background:#8b0000;padding:14px 8vw;display:flex;align-items:center;gap:12px;font-size:.88rem;color:rgba(255,255,255,.92);font-weight:500;}
-.ticker-dot{width:9px;height:9px;background:#ff4444;border-radius:50%;flex-shrink:0;animation:pulse 1.5s ease-in-out infinite;}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,68,68,.6)}50%{box-shadow:0 0 0 8px rgba(255,68,68,0)}}
+.hero-sub{font-size:.88rem;color:rgba(255,255,255,.48);line-height:1.65;margin-bottom:22px;max-width:340px;}
 
-/* EMOTION SECTION */
-.emotion{display:grid;grid-template-columns:1fr 1fr;}
-.emotion-photos{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:3px;background:#000;min-height:540px;}
-.emotion-photos img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.85) saturate(.9);transition:filter .3s;}
-.emotion-photos img:hover{filter:brightness(1) saturate(1.05);}
-.emotion-photos .big{grid-row:span 2;object-position:center top;}
-.emotion-text{background:var(--dark);padding:64px 56px;display:flex;flex-direction:column;justify-content:center;}
-.elabel{font-size:.68rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:20px;}
-.emotion-title{font-family:'Fraunces',serif;font-size:clamp(1.8rem,3vw,2.6rem);font-weight:900;color:#fff;line-height:1.1;margin-bottom:20px;}
-.emotion-body{font-size:.95rem;color:rgba(255,255,255,.6);line-height:1.8;margin-bottom:32px;}
-.pull-quote{border-left:3px solid var(--earth);padding:16px 20px;background:rgba(196,98,45,.12);border-radius:0 8px 8px 0;}
-.pull-quote p{font-family:'Fraunces',serif;font-style:italic;font-size:1.05rem;color:rgba(255,255,255,.85);line-height:1.6;}
-.pull-quote span{font-size:.75rem;color:rgba(255,255,255,.35);margin-top:8px;display:block;letter-spacing:1px;}
+/* mini stats */
+.mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:22px;}
+.ms{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:10px 8px;text-align:center;}
+.ms-val{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:900;color:var(--amber);display:block;}
+.ms-lbl{font-size:.6rem;color:rgba(255,255,255,.32);text-transform:uppercase;letter-spacing:.8px;margin-top:2px;line-height:1.3;}
 
-/* COUNTER */
-.counter-strip{background:var(--earth);padding:40px 8vw;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;}
-.cstat{text-align:center;padding:16px;}
-.cstat-val{font-family:'Fraunces',serif;font-size:2.2rem;font-weight:900;color:#fff;display:block;}
-.cstat-lbl{font-size:.72rem;color:rgba(255,255,255,.65);text-transform:uppercase;letter-spacing:1.5px;margin-top:6px;}
-
-/* PHOTO STRIP — full width 3 fotos */
-.photo-strip{display:grid;grid-template-columns:1fr 1fr 1fr;height:300px;gap:3px;background:#000;}
-.photo-strip img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.8) saturate(.9);transition:filter .4s,transform .4s;}
-.photo-strip img:hover{filter:brightness(.95) saturate(1.05);transform:scale(1.02);}
-
-/* IMPACT */
-.impact-section{padding:72px 8vw;background:var(--cream);}
-.section-header{text-align:center;margin-bottom:48px;}
-.slabel{font-size:.7rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--earth);margin-bottom:12px;}
-.stitle{font-family:'Fraunces',serif;font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900;line-height:1.15;}
-.impact-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
-.ic{background:#fff;border-radius:12px;padding:28px 22px;border:1px solid #e8ddd0;transition:transform .25s,box-shadow .25s;position:relative;overflow:hidden;}
-.ic:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(196,98,45,.12);}
-.ic::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--earth);}
-.ic-val{font-family:'Fraunces',serif;font-size:1.7rem;font-weight:900;color:var(--earth);margin-bottom:6px;}
-.ic-lbl{font-size:.85rem;color:var(--muted);line-height:1.5;}
-
-/* TESTIMONIAL */
-.testimonial{background:var(--sand);padding:72px 8vw;}
-.test-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;}
-.tcard{background:#fff;border-radius:14px;padding:32px 28px;box-shadow:0 2px 16px rgba(0,0,0,.06);}
-.tcard-stars{color:var(--amber);font-size:1rem;margin-bottom:16px;letter-spacing:2px;}
-.tcard-text{font-size:.93rem;color:var(--muted);line-height:1.75;margin-bottom:20px;font-style:italic;}
-.tcard-author{display:flex;align-items:center;gap:12px;}
-.tcard-avatar{width:40px;height:40px;border-radius:50%;background:var(--earth);display:flex;align-items:center;justify-content:center;font-size:1rem;color:#fff;font-weight:700;flex-shrink:0;}
-.tcard-name{font-size:.88rem;font-weight:600;}
-.tcard-city{font-size:.75rem;color:var(--muted);}
-
-/* MAIN LAYOUT */
-.main{display:grid;grid-template-columns:1fr 480px;gap:0;max-width:1280px;margin:0 auto;padding:80px 4vw;align-items:start;}
-.why{padding-right:72px;}
-.label{font-size:.7rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--earth);margin-bottom:16px;display:flex;align-items:center;gap:10px;}
-.label::after{content:'';flex:1;height:1px;background:var(--earth);opacity:.25;}
-.why-title{font-family:'Fraunces',serif;font-size:clamp(2rem,3vw,2.6rem);font-weight:700;line-height:1.15;margin-bottom:20px;letter-spacing:-1px;}
-.why-text{font-size:.98rem;color:var(--muted);line-height:1.85;margin-bottom:36px;}
-
-/* MOSAIC */
-.mosaic{display:grid;grid-template-columns:2fr 1fr;grid-template-rows:220px 220px;gap:8px;border-radius:14px;overflow:hidden;margin-bottom:28px;}
-.mosaic img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.9);transition:filter .3s,transform .3s;}
-.mosaic img:hover{filter:saturate(1.1);transform:scale(1.02);}
-.mosaic .tall{grid-row:span 2;}
-.mosaic-caption{grid-column:1/-1;background:var(--dark);padding:14px 18px;display:flex;align-items:center;gap:8px;font-size:.8rem;color:rgba(255,255,255,.55);}
-.mosaic-caption span{color:var(--amber);}
-
-/* FORM CARD */
-.form-card{background:var(--dark);border-radius:16px;overflow:hidden;position:sticky;top:32px;box-shadow:0 24px 80px rgba(26,18,8,.3);}
-.form-top{background:var(--earth);padding:30px 36px;}
-.form-top .label{color:rgba(255,255,255,.6);margin-bottom:10px;}
-.form-top .label::after{background:rgba(255,255,255,.25);}
-.form-top-title{font-family:'Fraunces',serif;font-size:1.65rem;font-weight:900;color:#fff;line-height:1.15;}
-.form-body{padding:32px 36px;}
-.flabel{font-size:.67rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:10px;display:block;}
-.amount-wrap{position:relative;margin-bottom:22px;}
-.amount-prefix{position:absolute;left:18px;top:50%;transform:translateY(-50%);font-family:'Fraunces',serif;font-size:1.4rem;font-weight:700;color:var(--amber);pointer-events:none;}
-#donationAmount{width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:18px 18px 18px 52px;font-family:'Fraunces',serif;font-size:1.9rem;font-weight:700;color:#fff;outline:none;transition:border-color .2s;-moz-appearance:textfield;}
+/* amount */
+.flabel{font-size:.62rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.32);margin-bottom:7px;display:block;}
+.amount-wrap{position:relative;margin-bottom:12px;}
+.amount-prefix{position:absolute;left:15px;top:50%;transform:translateY(-50%);font-family:'Fraunces',serif;font-size:1.4rem;font-weight:700;color:var(--amber);pointer-events:none;}
+#donationAmount{
+  width:100%;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.13);
+  border-radius:10px;padding:16px 16px 16px 48px;
+  font-family:'Fraunces',serif;font-size:1.8rem;font-weight:700;color:#fff;
+  outline:none;transition:border-color .2s;-moz-appearance:textfield;
+}
 #donationAmount::-webkit-outer-spin-button,#donationAmount::-webkit-inner-spin-button{-webkit-appearance:none;}
 #donationAmount:focus{border-color:var(--amber);}
-#donationAmount::placeholder{color:rgba(255,255,255,.18);font-size:1.5rem;}
-.quick-amounts{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
-.qa-btn{flex:1;min-width:56px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:10px 8px;font-family:'Instrument Sans',sans-serif;font-size:.83rem;font-weight:600;color:rgba(255,255,255,.6);cursor:pointer;transition:all .15s;text-align:center;}
-.qa-btn:hover{background:rgba(232,151,58,.15);border-color:var(--amber);color:var(--amber);}
-.qa-btn.active{background:var(--amber);border-color:var(--amber);color:var(--dark);}
-.divider{height:1px;background:rgba(255,255,255,.08);margin-bottom:24px;}
-.form-field{margin-bottom:14px;}
-.form-field input{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:14px 18px;font-family:'Instrument Sans',sans-serif;font-size:.93rem;color:#fff;outline:none;transition:border-color .2s;}
-.form-field input::placeholder{color:rgba(255,255,255,.28);}
-.form-field input:focus{border-color:var(--amber);}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.submit-btn{width:100%;background:linear-gradient(135deg,var(--earth) 0%,var(--amber) 100%);border:none;border-radius:8px;padding:20px;font-family:'Instrument Sans',sans-serif;font-size:1.05rem;font-weight:600;color:#fff;cursor:pointer;transition:opacity .2s,transform .2s;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:20px;}
+#donationAmount::placeholder{color:rgba(255,255,255,.14);font-size:1.4rem;}
+
+.quick-amounts{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:18px;}
+.qa{
+  background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.11);
+  border-radius:7px;padding:9px 4px;
+  font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;
+  color:rgba(255,255,255,.52);cursor:pointer;transition:all .15s;text-align:center;
+}
+.qa:hover{background:rgba(232,151,58,.15);border-color:var(--amber);color:var(--amber);}
+.qa.active{background:var(--amber);border-color:var(--amber);color:var(--dark);}
+
+.divider{height:1px;background:rgba(255,255,255,.07);margin:16px 0;}
+
+/* fields */
+.ff{margin-bottom:10px;}
+.ff input{
+  width:100%;background:rgba(255,255,255,.06);
+  border:1.5px solid rgba(255,255,255,.1);
+  border-radius:9px;padding:12px 15px;
+  font-family:'Instrument Sans',sans-serif;font-size:.9rem;
+  color:#fff;outline:none;transition:border-color .2s;
+}
+.ff input::placeholder{color:rgba(255,255,255,.24);}
+.ff input:focus{border-color:var(--amber);}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+
+.submit-btn{
+  width:100%;
+  background:linear-gradient(135deg,var(--earth) 0%,var(--amber) 100%);
+  border:none;border-radius:10px;padding:17px;
+  font-family:'Instrument Sans',sans-serif;font-size:.98rem;font-weight:600;
+  color:#fff;cursor:pointer;transition:opacity .2s,transform .2s;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  margin-top:16px;
+  box-shadow:0 6px 28px rgba(196,98,45,.35);
+}
 .submit-btn:hover:not(:disabled){opacity:.9;transform:translateY(-2px);}
 .submit-btn:disabled{opacity:.5;cursor:not-allowed;}
-.secure{display:flex;align-items:center;justify-content:center;gap:6px;font-size:.72rem;color:rgba(255,255,255,.28);margin-top:14px;text-align:center;}
-.form-err{background:rgba(220,50,50,.15);border:1px solid rgba(220,50,50,.3);border-radius:8px;padding:12px 16px;font-size:.83rem;color:#ff9090;margin-top:12px;display:none;}
+.secure{display:flex;align-items:center;justify-content:center;gap:6px;font-size:.68rem;color:rgba(255,255,255,.22);margin-top:10px;}
+.form-err{background:rgba(220,50,50,.15);border:1px solid rgba(220,50,50,.3);border-radius:8px;padding:10px 13px;font-size:.8rem;color:#ff9090;margin-top:8px;display:none;}
 .form-err.show{display:block;}
 
-/* PIX MODAL */
-.overlay{position:fixed;inset:0;background:rgba(10,8,4,.88);backdrop-filter:blur(8px);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;}
+/* ══ STATS STRIP ══ */
+.proof{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  background:var(--earth);
+}
+.proof-item{text-align:center;padding:22px 12px;border-right:1px solid rgba(255,255,255,.12);}
+.proof-item:last-child{border-right:none;}
+.proof-val{font-family:'Fraunces',serif;font-size:1.8rem;font-weight:900;color:#fff;display:block;}
+.proof-lbl{font-size:.65rem;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:1.5px;margin-top:4px;}
+
+/* ══ PHOTO STRIP 3 fotos ══ */
+.photo-strip{display:grid;grid-template-columns:1fr 1fr 1fr;height:260px;gap:2px;}
+.photo-strip img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.75) saturate(.9);transition:filter .35s,transform .35s;}
+.photo-strip img:hover{filter:brightness(.95) saturate(1.05);transform:scale(1.02);}
+
+/* ══ BOTTOM: impacto + depoimentos ══ */
+.bottom{display:grid;grid-template-columns:1fr 1fr;color:var(--dark);}
+.impact-col{padding:56px 5vw;background:var(--cream);}
+.why-col{padding:56px 5vw;background:var(--sand);}
+
+.col-tag{font-size:.65rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--earth);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.col-tag::after{content:'';flex:1;height:1px;background:var(--earth);opacity:.2;}
+.col-title{font-family:'Fraunces',serif;font-size:clamp(1.4rem,2.2vw,1.9rem);font-weight:900;line-height:1.15;margin-bottom:16px;letter-spacing:-.5px;}
+.col-text{font-size:.88rem;color:var(--muted);line-height:1.8;margin-bottom:24px;}
+
+.ic-list{display:flex;flex-direction:column;gap:10px;}
+.ic{display:flex;align-items:flex-start;gap:14px;background:#fff;border-radius:10px;padding:16px;border:1px solid #e8ddd0;}
+.ic-val{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:900;color:var(--earth);flex-shrink:0;min-width:56px;}
+.ic-lbl{font-size:.82rem;color:var(--muted);line-height:1.5;padding-top:2px;}
+
+.quote-block{background:var(--dark);border-radius:12px;padding:22px;margin-bottom:18px;}
+.quote-block p{font-family:'Fraunces',serif;font-style:italic;font-size:.95rem;color:rgba(255,255,255,.85);line-height:1.65;}
+.quote-block span{font-size:.68rem;color:rgba(255,255,255,.28);margin-top:10px;display:block;letter-spacing:1px;}
+
+.test-grid{display:flex;flex-direction:column;gap:12px;}
+.tcard{background:#fff;border-radius:10px;padding:18px;border:1px solid #e8ddd0;}
+.tcard-stars{color:var(--amber);font-size:.82rem;margin-bottom:7px;}
+.tcard-text{font-size:.8rem;color:var(--muted);line-height:1.65;margin-bottom:10px;font-style:italic;}
+.tcard-author{display:flex;align-items:center;gap:9px;}
+.tcard-av{width:32px;height:32px;border-radius:50%;background:var(--earth);display:flex;align-items:center;justify-content:center;font-size:.8rem;color:#fff;font-weight:700;flex-shrink:0;}
+.tcard-name{font-size:.8rem;font-weight:600;color:var(--dark);}
+.tcard-city{font-size:.68rem;color:var(--muted);}
+
+/* ══ FOOTER ══ */
+footer{
+  background:var(--dark);
+  padding:28px 5vw;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:14px;
+  border-top:1px solid rgba(255,255,255,.05);
+}
+.footer-logo{display:flex;align-items:center;gap:10px;}
+.footer-logo img{width:44px;height:44px;object-fit:contain;border-radius:8px;}
+.footer-logo-name{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:900;color:var(--amber);}
+footer p{font-size:.72rem;color:rgba(255,255,255,.22);}
+
+/* ══ PIX MODAL ══ */
+.overlay{position:fixed;inset:0;background:rgba(10,8,4,.9);backdrop-filter:blur(8px);z-index:1000;display:none;align-items:center;justify-content:center;padding:16px;}
 .overlay.open{display:flex;}
-.pix-modal{background:var(--cream);border-radius:20px;padding:44px 40px;max-width:460px;width:100%;text-align:center;box-shadow:0 32px 100px rgba(0,0,0,.5);animation:popIn .3s cubic-bezier(.34,1.56,.64,1) both;}
-@keyframes popIn{from{transform:scale(.82) translateY(18px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
-.pix-icon{width:64px;height:64px;background:var(--earth);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto 18px;}
-.pix-title{font-family:'Fraunces',serif;font-size:1.7rem;font-weight:900;margin-bottom:8px;}
-.pix-sub{font-size:.88rem;color:var(--muted);margin-bottom:22px;line-height:1.5;}
-.pix-box{background:#f0e6d3;border:2px dashed var(--earth);border-radius:10px;padding:16px;font-family:monospace;font-size:.7rem;color:#4a3520;word-break:break-all;line-height:1.5;max-height:110px;overflow-y:auto;margin-bottom:14px;text-align:left;}
-.copy-btn{width:100%;background:var(--earth);color:#fff;border:none;border-radius:10px;padding:15px;font-family:'Instrument Sans',sans-serif;font-size:.93rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px;transition:background .2s;}
+.pix-modal{background:var(--cream);border-radius:18px;padding:40px 36px;max-width:440px;width:100%;text-align:center;box-shadow:0 32px 100px rgba(0,0,0,.5);animation:popIn .3s cubic-bezier(.34,1.56,.64,1) both;color:var(--dark);}
+@keyframes popIn{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+.pix-icon{width:60px;height:60px;background:var(--earth);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.7rem;margin:0 auto 16px;}
+.pix-title{font-family:'Fraunces',serif;font-size:1.6rem;font-weight:900;margin-bottom:7px;}
+.pix-sub{font-size:.85rem;color:var(--muted);margin-bottom:20px;line-height:1.5;}
+.pix-box{background:#f0e6d3;border:2px dashed var(--earth);border-radius:10px;padding:14px;font-family:monospace;font-size:.68rem;color:#4a3520;word-break:break-all;line-height:1.5;max-height:100px;overflow-y:auto;margin-bottom:12px;text-align:left;}
+.copy-btn{width:100%;background:var(--earth);color:#fff;border:none;border-radius:9px;padding:14px;font-family:'Instrument Sans',sans-serif;font-size:.9rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:8px;transition:background .2s;}
 .copy-btn:hover{background:#a84e22;}
-.tx-status{padding:11px 14px;border-radius:8px;font-size:.82rem;font-weight:500;margin-top:10px;}
+.tx-status{padding:10px 13px;border-radius:8px;font-size:.8rem;font-weight:500;margin-top:8px;}
 .tx-status.pending{background:#fff8e6;color:#7a5c00;}
 .tx-status.paid{background:#d1fae5;color:#065f46;}
 .tx-status.error{background:#fee2e2;color:#991b1b;}
-.modal-close{background:none;border:1.5px solid #d0c4b0;border-radius:8px;padding:11px 20px;font-size:.83rem;color:var(--muted);cursor:pointer;width:100%;margin-top:10px;font-family:'Instrument Sans',sans-serif;transition:border-color .2s,color .2s;}
+.modal-close{background:none;border:1.5px solid #d0c4b0;border-radius:8px;padding:10px;font-size:.82rem;color:var(--muted);cursor:pointer;width:100%;margin-top:8px;font-family:'Instrument Sans',sans-serif;transition:border-color .2s,color .2s;}
 .modal-close:hover{border-color:var(--earth);color:var(--earth);}
 
-/* FOOTER */
-footer{background:var(--dark);padding:48px 8vw;text-align:center;}
-.footer-brand{font-family:'Fraunces',serif;font-size:1.6rem;font-weight:900;color:var(--amber);display:block;margin-bottom:12px;}
-footer p{color:rgba(255,255,255,.28);font-size:.8rem;line-height:1.7;}
-
-/* SPINNER */
-.spin{width:18px;height:18px;border:2.5px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:rot .7s linear infinite;display:inline-block;}
+.spin{width:16px;height:16px;border:2.5px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:rot .7s linear infinite;display:inline-block;}
 @keyframes rot{to{transform:rotate(360deg)}}
 
-/* RESPONSIVE */
-@media(max-width:1024px){
-  .emotion{grid-template-columns:1fr;}
-  .emotion-photos{height:300px;grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr;}
-  .emotion-photos .big{grid-row:span 1;}
-  .impact-grid{grid-template-columns:repeat(2,1fr);}
-  .counter-strip{grid-template-columns:repeat(2,1fr);}
-  .test-grid{grid-template-columns:1fr 1fr;}
-  .photo-strip{height:200px;}
+/* ══ MOBILE ══ */
+@media(max-width:768px){
+  /* Hero vira coluna única: foto em cima, form embaixo */
+  .hero{
+    grid-template-columns:1fr;
+    grid-template-rows:auto auto;
+    min-height:auto;
+  }
+  .hero-left{
+    height:55vw;
+    min-height:220px;
+    max-height:320px;
+  }
+  /* no mobile a logo fica menor */
+  .hero-logo img{width:48px;height:48px;}
+  .hero-logo-name{font-size:1.1rem;}
+  .urgency-badge{font-size:.62rem;padding:6px 10px;}
+  .photo-caption{display:none;} /* esconde em telas pequenas */
+
+  .hero-right{
+    padding:32px 20px 40px;
+  }
+  .hero-sub{max-width:100%;}
+  .mini-stats{grid-template-columns:repeat(3,1fr);gap:6px;}
+  .ms-val{font-size:.95rem;}
+  .ms-lbl{font-size:.55rem;}
+
+  /* stats strip 2 colunas */
+  .proof{grid-template-columns:1fr 1fr;}
+  .proof-item{border-bottom:1px solid rgba(255,255,255,.1);}
+  .proof-val{font-size:1.5rem;}
+
+  /* foto strip menor */
+  .photo-strip{height:140px;}
+
+  /* bottom vira coluna única */
+  .bottom{grid-template-columns:1fr;}
+  .impact-col,.why-col{padding:40px 20px;}
+
+  /* footer centralizado */
+  footer{flex-direction:column;align-items:center;text-align:center;padding:24px 20px;}
+
+  /* form fields full width */
+  .frow{grid-template-columns:1fr;}
+  #donationAmount{font-size:1.5rem;}
 }
-@media(max-width:900px){
-  .main{grid-template-columns:1fr;padding:48px 5vw;}
-  .why{padding-right:0;margin-bottom:48px;}
-  .form-card{position:static;}
-  .mosaic{grid-template-columns:1fr 1fr;grid-template-rows:180px 180px;}
-  .hero-nums{gap:28px;}
-}
-@media(max-width:600px){
-  .emotion-photos{grid-template-columns:1fr 1fr;}
-  .impact-grid{grid-template-columns:1fr 1fr;}
-  .counter-strip{grid-template-columns:1fr 1fr;}
-  .test-grid{grid-template-columns:1fr;}
-  .form-row{grid-template-columns:1fr;}
-  .form-body{padding:24px 20px;}
-  .form-top{padding:24px 20px;}
-  .photo-strip{grid-template-columns:1fr 1fr;height:220px;}
-  .africa-watermark{width:300px;height:300px;right:-20px;}
+
+@media(max-width:400px){
+  .quick-amounts{grid-template-columns:repeat(3,1fr);}
+  .hero-left{height:60vw;}
+  .photo-strip{grid-template-columns:1fr 1fr 1fr;height:110px;}
+  .proof{grid-template-columns:1fr 1fr;}
 }
 </style>
 </head>
 <body>
 
-<!-- HERO com foto1 no bg e símbolo da África -->
+<!-- ══ HERO ══ -->
 <section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-grain"></div>
-  <div class="hero-grad"></div>
 
-  <!-- Contorno da África como marca d'água -->
-  <svg class="africa-watermark" viewBox="0 0 400 500" fill="white" xmlns="http://www.w3.org/2000/svg">
-    <path d="M200,20 C170,22 140,30 120,50 C95,75 80,100 70,130 C55,165 50,195 55,225
-             C60,255 75,275 70,305 C65,330 50,345 45,370 C40,395 55,420 75,440
-             C95,460 125,475 155,480 C175,483 195,480 210,470
-             C230,458 245,438 255,415 C268,388 272,358 278,328
-             C285,295 295,265 305,235 C318,198 328,160 320,122
-             C312,85 290,55 265,38 C245,24 222,18 200,20 Z"/>
-  </svg>
+  <!-- ESQUERDA / TOPO no mobile: foto -->
+  <div class="hero-left">
+    <img class="bg" src="foto2.png" alt="Criança africana precisando de ajuda"/>
+    <div class="hero-left-overlay"></div>
 
-  <div class="hero-content">
-    <span class="eyebrow">Campanha humanitária urgente</span>
-    <h1 class="hero-title">
-      Enquanto você<br/>lê isso, uma<br/>
-      <em>criança tem fome.</em>
-    </h1>
-    <p class="hero-desc">
-      257 milhões de africanos dormem com fome toda noite. Com apenas R$10 você garante refeições por uma semana para uma criança. Sua doação chega hoje.
-    </p>
-    <a href="#doar" class="hero-cta">
-      Quero ajudar agora <span>→</span>
-    </a>
-    <div class="hero-nums">
+    <div class="hero-logo">
+      <img src="logo.png" alt="África Viva"/>
       <div>
-        <span class="hnum-val">257M</span>
-        <span class="hnum-lbl">com fome diária</span>
-      </div>
-      <div>
-        <span class="hnum-val">1 em 3</span>
-        <span class="hnum-lbl">crianças desnutridas</span>
-      </div>
-      <div>
-        <span class="hnum-val">R$10</span>
-        <span class="hnum-lbl">já transforma uma vida</span>
+        <div class="hero-logo-name">África Viva</div>
+        <div class="hero-logo-sub">ONG Humanitária</div>
       </div>
     </div>
+
+    <div class="urgency-badge">
+      <div class="udot"></div>
+      URGENTE: 47 crianças aguardam hoje
+    </div>
+
+    <div class="photo-caption">
+      <p>"Ela tem 2 anos e nunca tomou uma vacina. Com R$50 sua vida muda hoje."</p>
+      <span>— África Subsaariana, 2024</span>
+    </div>
+  </div>
+
+  <!-- DIREITA / BAIXO no mobile: form -->
+  <div class="hero-right">
+    <div class="hero-eyebrow">Doação via PIX — instantânea</div>
+    <h1 class="hero-title">
+      Salve uma vida<br/>
+      <em>agora mesmo.</em>
+    </h1>
+    <p class="hero-sub">257 milhões dormem com fome na África todo dia. Com R$10 você já muda isso.</p>
+
+    <div class="mini-stats">
+      <div class="ms"><span class="ms-val">R$10</span><span class="ms-lbl">1 semana de comida</span></div>
+      <div class="ms"><span class="ms-val">R$50</span><span class="ms-lbl">vacina completa</span></div>
+      <div class="ms"><span class="ms-val">100%</span><span class="ms-lbl">vai para África</span></div>
+    </div>
+
+    <label class="flabel">quanto você quer doar?</label>
+    <div class="amount-wrap">
+      <span class="amount-prefix">R$</span>
+      <input type="number" id="donationAmount" placeholder="0,00" min="2" max="1000000" step="0.01" oninput="onAmountInput()"/>
+    </div>
+    <div class="quick-amounts">
+      <button class="qa" onclick="setAmount(this,10)">R$10</button>
+      <button class="qa" onclick="setAmount(this,25)">R$25</button>
+      <button class="qa" onclick="setAmount(this,50)">R$50</button>
+      <button class="qa" onclick="setAmount(this,100)">R$100</button>
+      <button class="qa" onclick="setAmount(this,250)">R$250</button>
+    </div>
+
+    <div class="divider"></div>
+
+    <label class="flabel">seus dados</label>
+    <div class="ff"><input type="text" id="fName" placeholder="Nome completo" autocomplete="name"/></div>
+    <div class="frow">
+      <div class="ff"><input type="text" id="fCpf" placeholder="CPF" maxlength="14" oninput="maskCPF(this)"/></div>
+      <div class="ff"><input type="text" id="fPhone" placeholder="Telefone (opcional)" maxlength="15" oninput="maskPhone(this)"/></div>
+    </div>
+    <div class="ff"><input type="email" id="fEmail" placeholder="E-mail" autocomplete="email"/></div>
+
+    <div class="form-err" id="formErr"></div>
+
+    <button class="submit-btn" id="submitBtn" onclick="submitDonation()">
+      🌍 Gerar PIX e Salvar Vidas
+    </button>
+    <p class="secure">🔒 Pagamento seguro via SyncPay · SSL 256-bit</p>
   </div>
 </section>
 
-<!-- URGENCY -->
-<div class="ticker">
-  <div class="ticker-dot"></div>
-  <strong>URGENTE:</strong>&nbsp;Hoje 47 crianças em nosso programa aguardam por alimentação. Toda doação feita agora chega em 24h.
+<!-- ══ STATS ══ -->
+<div class="proof">
+  <div class="proof-item"><span class="proof-val">257M</span><span class="proof-lbl">com fome diária</span></div>
+  <div class="proof-item"><span class="proof-val">3,4M</span><span class="proof-lbl">crianças morrem/ano</span></div>
+  <div class="proof-item"><span class="proof-val">400M</span><span class="proof-lbl">extrema pobreza</span></div>
+  <div class="proof-item"><span class="proof-val">100%</span><span class="proof-lbl">transparência</span></div>
 </div>
 
-<!-- EMOTION: foto2 grande + foto3 pequena -->
-<section class="emotion">
-  <div class="emotion-photos">
-    <img class="big" src="foto2.png" alt="Criança desnutrida recebendo ajuda"/>
-    <img src="foto3.png" alt="Crianças buscando água contaminada"/>
-    <img src="foto5.png" alt="Criança bebendo água suja do chão"/>
+<!-- ══ 3 FOTOS ══ -->
+<div class="photo-strip">
+  <img src="foto1.png" alt="Criança africana no deserto"/>
+  <img src="foto2.png" alt="Criança desnutrida recebendo ajuda"/>
+  <img src="foto3.png" alt="Crianças buscando água"/>
+</div>
+
+<!-- ══ IMPACTO + DEPOIMENTOS ══ -->
+<div class="bottom">
+  <div class="impact-col">
+    <div class="col-tag">O que sua doação faz</div>
+    <h2 class="col-title">Cada real tem um destino real</h2>
+    <p class="col-text">Nenhum centavo se perde. Todo valor vai direto para alimentação, vacinas e água potável.</p>
+    <div class="ic-list">
+      <div class="ic"><div class="ic-val">R$10</div><div class="ic-lbl">Alimentação por uma semana para uma criança desnutrida</div></div>
+      <div class="ic"><div class="ic-val">R$25</div><div class="ic-lbl">Kit de higiene + tratamento contra parasitas</div></div>
+      <div class="ic"><div class="ic-val">R$50</div><div class="ic-lbl">Vacinação completa contra doenças evitáveis</div></div>
+      <div class="ic"><div class="ic-val">R$100</div><div class="ic-lbl">Um mês de alimentação + acompanhamento nutricional</div></div>
+    </div>
   </div>
-  <div class="emotion-text">
-    <div class="elabel">A realidade que ninguém mostra</div>
-    <h2 class="emotion-title">Eles não pedem luxo.<br/>Só pedem comida.</h2>
-    <p class="emotion-body">
-      Na África Subsaariana, milhões de crianças acordam sem saber se vão comer naquele dia. Não há água potável, não há médico, não há escola. Apenas a esperança de que alguém — em algum lugar do mundo — se importe.
-      <br/><br/>
-      Você pode ser esse alguém. Hoje. Agora.
-    </p>
-    <div class="pull-quote">
-      <p>"Uma em cada três crianças na África tem crescimento prejudicado pela desnutrição crônica. Muitas não chegam aos 5 anos."</p>
+
+  <div class="why-col">
+    <div class="col-tag">Quem já doou</div>
+    <h2 class="col-title">Pessoas reais, histórias reais</h2>
+    <div class="quote-block">
+      <p>"1 em cada 3 crianças na África tem crescimento prejudicado pela desnutrição. Muitas não chegam aos 5 anos."</p>
       <span>— OMS, Relatório Mundial de Saúde 2024</span>
     </div>
+    <div class="test-grid">
+      <div class="tcard">
+        <div class="tcard-stars">★★★★★</div>
+        <p class="tcard-text">"Doei R$50 e em segundos recebi a confirmação. Simples e que realmente ajuda."</p>
+        <div class="tcard-author"><div class="tcard-av">M</div><div><div class="tcard-name">Marina S.</div><div class="tcard-city">São Paulo, SP</div></div></div>
+      </div>
+      <div class="tcard">
+        <div class="tcard-stars">★★★★★</div>
+        <p class="tcard-text">"Faço doações mensais. Nunca pensei que R$30/mês pudesse impactar tanto."</p>
+        <div class="tcard-author"><div class="tcard-av">R</div><div><div class="tcard-name">Rafael C.</div><div class="tcard-city">Belo Horizonte, MG</div></div></div>
+      </div>
+      <div class="tcard">
+        <div class="tcard-stars">★★★★★</div>
+        <p class="tcard-text">"Fizemos a doação em família. Um ato simples que ensina muito às crianças."</p>
+        <div class="tcard-author"><div class="tcard-av">A</div><div><div class="tcard-name">Ana Paula L.</div><div class="tcard-city">Curitiba, PR</div></div></div>
+      </div>
+    </div>
   </div>
-</section>
-
-<!-- COUNTER -->
-<div class="counter-strip">
-  <div class="cstat"><span class="cstat-val">600M+</span><span class="cstat-lbl">sem eletricidade</span></div>
-  <div class="cstat"><span class="cstat-val">400M</span><span class="cstat-lbl">em extrema pobreza</span></div>
-  <div class="cstat"><span class="cstat-val">3,4M</span><span class="cstat-lbl">crianças morrem/ano</span></div>
-  <div class="cstat"><span class="cstat-val">40%</span><span class="cstat-lbl">sem acesso à educação</span></div>
 </div>
 
-<!-- PHOTO STRIP: 3 fotos lado a lado -->
-<div class="photo-strip">
-  <img src="foto6.png" alt="Criança bebendo água suja"/>
-  <img src="foto7.png" alt="África seca e árida"/>
-  <img src="foto1.png" alt="Criança no deserto africano"/>
-</div>
-
-<!-- IMPACT -->
-<section class="impact-section">
-  <div class="section-header">
-    <div class="slabel">O que sua doação faz</div>
-    <h2 class="stitle">Cada real tem um destino real</h2>
-  </div>
-  <div class="impact-grid">
-    <div class="ic"><div class="ic-val">R$ 10</div><div class="ic-lbl">Refeições por uma semana inteira para uma criança desnutrida</div></div>
-    <div class="ic"><div class="ic-val">R$ 25</div><div class="ic-lbl">Kit de higiene + tratamento básico contra parasitas intestinais</div></div>
-    <div class="ic"><div class="ic-val">R$ 50</div><div class="ic-lbl">Vacinação completa contra doenças evitáveis para 1 criança</div></div>
-    <div class="ic"><div class="ic-val">R$ 100</div><div class="ic-lbl">Um mês de alimentação + acompanhamento nutricional especializado</div></div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section class="testimonial">
-  <div class="section-header" style="margin-bottom:40px;">
-    <div class="slabel">Quem já doou</div>
-    <h2 class="stitle">Pessoas como você estão mudando histórias</h2>
-  </div>
-  <div class="test-grid">
-    <div class="tcard">
-      <div class="tcard-stars">★★★★★</div>
-      <p class="tcard-text">"Doei R$50 e em segundos recebi a confirmação. É muito fácil e saber que está ajudando de verdade faz toda diferença."</p>
-      <div class="tcard-author"><div class="tcard-avatar">M</div><div><div class="tcard-name">Marina S.</div><div class="tcard-city">São Paulo, SP</div></div></div>
-    </div>
-    <div class="tcard">
-      <div class="tcard-stars">★★★★★</div>
-      <p class="tcard-text">"Faço doações mensais. Nunca pensei que R$30 por mês pudesse impactar tanto. Indico para todo mundo."</p>
-      <div class="tcard-author"><div class="tcard-avatar">R</div><div><div class="tcard-name">Rafael C.</div><div class="tcard-city">Belo Horizonte, MG</div></div></div>
-    </div>
-    <div class="tcard">
-      <div class="tcard-stars">★★★★★</div>
-      <p class="tcard-text">"Mostrei para minha filha e ela ficou emocionada. Fizemos a doação juntas. É um ato simples que ensina muito."</p>
-      <div class="tcard-author"><div class="tcard-avatar">A</div><div><div class="tcard-name">Ana Paula L.</div><div class="tcard-city">Curitiba, PR</div></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- MAIN: WHY + FORM -->
-<section class="main" id="doar">
-  <div class="why">
-    <div class="label">Por que agir agora</div>
-    <h2 class="why-title">Cada dia sem doação é um dia a mais de sofrimento</h2>
-    <p class="why-text">Não existe amanhã para quem está com fome hoje. As comunidades que atendemos dependem de doações contínuas para manter programas de alimentação, saúde e educação. Quando as doações param, as crianças param de comer.</p>
-
-    <!-- mosaic com fotos enviadas -->
-    <div class="mosaic">
-      <img class="tall" src="foto3.png" alt="Crianças buscando água"/>
-      <img src="foto5.png" alt="Criança no seco"/>
-      <img src="foto6.png" alt="Criança bebendo água suja"/>
-      <div class="mosaic-caption">📸 <span>Registros reais das comunidades atendidas</span> — África Subsaariana, 2024</div>
-    </div>
-
-    <div style="background:var(--dark);border-radius:14px;padding:32px;">
-      <div style="font-family:'Fraunces',serif;font-size:1.2rem;font-weight:700;color:#fff;margin-bottom:12px;">🔒 100% transparente</div>
-      <p style="font-size:.88rem;color:rgba(255,255,255,.5);line-height:1.75;">Todo valor arrecadado é auditado e publicado. Nenhum centavo fica retido. Você pode acompanhar o destino da sua doação com o código de confirmação enviado por e-mail.</p>
-    </div>
-  </div>
-
-  <!-- FORM -->
-  <div class="form-card">
-    <div class="form-top">
-      <div class="label">Doação via PIX</div>
-      <div class="form-top-title">Quanto você<br/>quer transformar?</div>
-    </div>
-    <div class="form-body">
-      <label class="flabel">valor da doação (qualquer quantia)</label>
-      <div class="amount-wrap">
-        <span class="amount-prefix">R$</span>
-        <input type="number" id="donationAmount" placeholder="0,00" min="2" max="1000000" step="0.01" oninput="onAmountInput()"/>
-      </div>
-      <div class="quick-amounts">
-        <button class="qa-btn" onclick="setAmount(this,10)">R$10</button>
-        <button class="qa-btn" onclick="setAmount(this,25)">R$25</button>
-        <button class="qa-btn" onclick="setAmount(this,50)">R$50</button>
-        <button class="qa-btn" onclick="setAmount(this,100)">R$100</button>
-        <button class="qa-btn" onclick="setAmount(this,250)">R$250</button>
-      </div>
-      <div class="divider"></div>
-      <label class="flabel">seus dados</label>
-      <div class="form-field"><input type="text" id="fName" placeholder="Nome completo" autocomplete="name"/></div>
-      <div class="form-row">
-        <div class="form-field"><input type="text" id="fCpf" placeholder="CPF (11 dígitos)" maxlength="14" oninput="maskCPF(this)"/></div>
-        <div class="form-field"><input type="text" id="fPhone" placeholder="Telefone (opcional)" maxlength="15" oninput="maskPhone(this)"/></div>
-      </div>
-      <div class="form-field"><input type="email" id="fEmail" placeholder="Seu e-mail" autocomplete="email"/></div>
-      <div class="form-err" id="formErr"></div>
-      <button class="submit-btn" id="submitBtn" onclick="submitDonation()">
-        🌍 Gerar PIX e Salvar Vidas
-      </button>
-      <p class="secure">🔒 Pagamento seguro via SyncPay · SSL 256-bit</p>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
+<!-- ══ FOOTER ══ -->
 <footer>
-  <span class="footer-brand">África Viva</span>
-  <p>Cada real doado vai diretamente para comunidades africanas em situação de vulnerabilidade.</p>
-  <p style="margin-top:8px;">© 2025 África Viva · Todos os direitos reservados</p>
+  <div class="footer-logo">
+    <img src="logo.png" alt="África Viva"/>
+    <span class="footer-logo-name">África Viva</span>
+  </div>
+  <p>© 2025 África Viva · ONG Humanitária</p>
+  <p>100% do valor vai para comunidades africanas</p>
 </footer>
 
-<!-- PIX MODAL -->
+<!-- ══ PIX MODAL ══ -->
 <div class="overlay" id="overlay">
   <div class="pix-modal">
     <div class="pix-icon">🌍</div>
     <h2 class="pix-title">PIX gerado!</h2>
-    <p class="pix-sub">Copie o código abaixo e pague no app do seu banco.<br/>O pagamento é confirmado em segundos.</p>
+    <p class="pix-sub">Copie o código e pague no app do seu banco. Confirmado em segundos.</p>
     <div class="pix-box" id="pixCode">Aguarde...</div>
     <button class="copy-btn" id="copyBtn" onclick="copyCode()">📋 Copiar código PIX</button>
     <div class="tx-status pending" id="txStatus">⏳ Aguardando pagamento...</div>
@@ -425,12 +446,12 @@ footer p{color:rgba(255,255,255,.28);font-size:.8rem;line-height:1.7;}
   let currentId=null,pollTimer=null;
 
   function setAmount(btn,val){
-    document.querySelectorAll('.qa-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.qa').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
     document.getElementById('donationAmount').value=val;
   }
   function onAmountInput(){
-    document.querySelectorAll('.qa-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.qa').forEach(b=>b.classList.remove('active'));
   }
   function maskCPF(el){
     let v=el.value.replace(/\D/g,'').slice(0,11);
@@ -454,16 +475,20 @@ footer p{color:rgba(255,255,255,.28);font-size:.8rem;line-height:1.7;}
     const cpf=document.getElementById('fCpf').value.trim();
     const email=document.getElementById('fEmail').value.trim();
     const phone=document.getElementById('fPhone').value.trim();
-    if(!amount||amount<2) return showError('⚠️ Informe um valor mínimo de R$2,00.');
-    if(amount>1000000) return showError('⚠️ Valor máximo é R$1.000.000,00.');
+    if(!amount||amount<2) return showError('⚠️ Valor mínimo de R$2,00.');
+    if(amount>1000000) return showError('⚠️ Valor máximo R$1.000.000,00.');
     if(!name) return showError('⚠️ Informe seu nome completo.');
-    if(cpf.replace(/\D/g,'').length!==11) return showError('⚠️ Informe um CPF válido com 11 dígitos.');
-    if(!email||!email.includes('@')) return showError('⚠️ Informe um e-mail válido.');
+    if(cpf.replace(/\D/g,'').length!==11) return showError('⚠️ CPF inválido.');
+    if(!email||!email.includes('@')) return showError('⚠️ E-mail inválido.');
     const btn=document.getElementById('submitBtn');
     btn.disabled=true;
     btn.innerHTML='<span class="spin"></span> Gerando PIX...';
     try{
-      const res=await fetch('/api/donate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount,name,cpf,email,phone})});
+      const res=await fetch('/api/donate',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({amount,name,cpf,email,phone})
+      });
       const data=await res.json();
       if(!res.ok||data.error) throw new Error(data.error||'Erro ao gerar PIX.');
       currentId=data.identifier;
@@ -501,18 +526,18 @@ footer p{color:rgba(255,255,255,.28);font-size:.8rem;line-height:1.7;}
         const s=(data.status||'').toLowerCase();
         const el=document.getElementById('txStatus');
         if(s==='paid'||s==='completed'||s==='approved'){
-          el.textContent='✅ Pagamento confirmado! Obrigado pela doação! 🌍';
-          el.className='tx-status paid';
-          clearInterval(pollTimer);
+          el.textContent='✅ Pagamento confirmado! Obrigado! 🌍';
+          el.className='tx-status paid';clearInterval(pollTimer);
         }else if(s==='failed'||s==='expired'){
           el.textContent='❌ PIX expirado. Feche e tente novamente.';
-          el.className='tx-status error';
-          clearInterval(pollTimer);
+          el.className='tx-status error';clearInterval(pollTimer);
         }
       }catch{}
     },5000);
   }
-  document.getElementById('overlay').addEventListener('click',function(e){if(e.target===this)closeModal();});
+  document.getElementById('overlay').addEventListener('click',function(e){
+    if(e.target===this)closeModal();
+  });
 </script>
 </body>
 </html>
