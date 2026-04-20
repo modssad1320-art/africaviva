@@ -3,329 +3,392 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>África Viva — Doe Agora</title>
+<title>Médicos Sem Fronteiras — Doe Agora</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;0,900;1,300&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
 :root{
-  --earth:#c4622d;
-  --amber:#e8973a;
-  --dark:#1a1208;
-  --cream:#faf6ee;
-  --sand:#f0e6d3;
-  --muted:#8a7a65;
+  --red:#e8181b;
+  --red-dark:#b71c1c;
+  --red-light:#ff5252;
+  --black:#0d0d0d;
+  --white:#ffffff;
+  --gray:#f5f5f5;
+  --gray-mid:#e0e0e0;
+  --muted:#757575;
+  --text:#1a1a1a;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
-body{font-family:'Instrument Sans',sans-serif;background:var(--dark);color:#fff;overflow-x:hidden;}
+body{font-family:'Barlow',sans-serif;background:var(--white);color:var(--text);overflow-x:hidden;}
 
-/* ══ HERO ══ */
+/* ══ HEADER ══ */
+header{
+  background:var(--black);
+  padding:0 5vw;
+  height:68px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;
+  border-bottom:3px solid var(--red);
+}
+.header-logo{display:flex;align-items:center;gap:14px;}
+.header-logo img{height:40px;object-fit:contain;filter:brightness(0) invert(1);}
+.header-logo-text{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1.25rem;font-weight:800;
+  color:var(--white);letter-spacing:.5px;line-height:1.1;
+  text-transform:uppercase;
+}
+.header-logo-text span{color:var(--red);display:block;font-size:.75rem;font-weight:600;letter-spacing:2px;}
+.header-cta{
+  background:var(--red);color:var(--white);
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  padding:10px 24px;border-radius:2px;
+  text-decoration:none;transition:background .2s;
+  border:none;cursor:pointer;
+}
+.header-cta:hover{background:var(--red-dark);}
+
+/* ══ HERO SPLIT ══ */
 .hero{
-  min-height:100vh;
   display:grid;
   grid-template-columns:1fr 1fr;
+  min-height:calc(100vh - 68px);
 }
 
-/* FOTO lado esquerdo */
-.hero-left{position:relative;overflow:hidden;}
-.hero-left img.bg{
+/* VIDEO lado esquerdo */
+.hero-media{position:relative;overflow:hidden;background:#000;}
+.hero-media video{
   width:100%;height:100%;
-  object-fit:cover;object-position:center top;
-  display:block;
-  filter:brightness(.55) saturate(1.1);
+  object-fit:cover;display:block;
+  filter:brightness(.6);
 }
-.hero-left-overlay{
+/* fallback se video não carregar */
+.hero-media .video-fallback{
+  width:100%;height:100%;
+  background:linear-gradient(135deg,#1a1a1a 0%,#2d0000 100%);
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:16px;
+}
+.video-fallback-icon{font-size:4rem;opacity:.3;}
+.video-fallback-text{font-family:'Barlow Condensed',sans-serif;font-size:1rem;color:rgba(255,255,255,.3);letter-spacing:2px;text-transform:uppercase;}
+
+.hero-media-overlay{
   position:absolute;inset:0;
-  background:linear-gradient(to right,transparent 55%,rgba(26,18,8,.95) 100%),
-             linear-gradient(to bottom,rgba(26,18,8,.35) 0%,transparent 25%);
+  background:linear-gradient(to right,transparent 50%,rgba(13,13,13,.95) 100%),
+             linear-gradient(to bottom,rgba(13,13,13,.2) 0%,transparent 20%);
 }
+.media-label{
+  position:absolute;bottom:24px;left:24px;
+  display:flex;align-items:center;gap:8px;
+  font-size:.72rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;
+  color:rgba(255,255,255,.55);
+}
+.media-label::before{content:'▶';color:var(--red);font-size:.7rem;}
 
-.hero-logo{
-  position:absolute;top:24px;left:24px;
-  display:flex;align-items:center;gap:12px;z-index:10;
+/* VIDEO UPLOAD hint */
+.video-hint{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  background:rgba(232,24,27,.85);
+  border-radius:3px;padding:14px 22px;text-align:center;
+  pointer-events:none;
 }
-.hero-logo img{
-  width:64px;height:64px;object-fit:contain;border-radius:10px;
-  filter:drop-shadow(0 4px 16px rgba(0,0,0,.5));
-}
-.hero-logo-name{font-family:'Fraunces',serif;font-size:1.35rem;font-weight:900;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.6);line-height:1;}
-.hero-logo-sub{font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-top:3px;}
-
-.urgency-badge{
-  position:absolute;top:24px;right:24px;
-  background:#8b0000;border-radius:50px;
-  padding:7px 13px;display:flex;align-items:center;gap:7px;
-  font-size:.7rem;font-weight:600;color:#fff;letter-spacing:.3px;
-  z-index:10;
-}
-.udot{width:7px;height:7px;background:#ff4444;border-radius:50%;animation:pdot 1.4s ease-in-out infinite;flex-shrink:0;}
-@keyframes pdot{0%,100%{box-shadow:0 0 0 0 rgba(255,68,68,.6)}50%{box-shadow:0 0 0 7px rgba(255,68,68,0)}}
-
-.photo-caption{
-  position:absolute;bottom:28px;left:24px;right:24px;
-  background:rgba(0,0,0,.5);backdrop-filter:blur(8px);
-  border-radius:10px;padding:14px 16px;
-  border-left:3px solid var(--earth);
-}
-.photo-caption p{font-size:.8rem;color:rgba(255,255,255,.85);line-height:1.5;}
-.photo-caption span{font-size:.65rem;color:rgba(255,255,255,.38);margin-top:4px;display:block;letter-spacing:1px;}
+.video-hint p{font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:700;color:#fff;letter-spacing:1px;text-transform:uppercase;}
 
 /* FORM lado direito */
-.hero-right{
-  background:var(--dark);
+.hero-form{
+  background:var(--black);
+  padding:52px 48px;
   display:flex;flex-direction:column;justify-content:center;
-  padding:56px 48px;overflow-y:auto;
+  overflow-y:auto;
 }
 
-.hero-eyebrow{
-  font-size:.65rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;
-  color:var(--amber);margin-bottom:14px;
+.form-eyebrow{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:.72rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;
+  color:var(--red);margin-bottom:12px;
   display:flex;align-items:center;gap:10px;
 }
-.hero-eyebrow::before{content:'';width:22px;height:2px;background:var(--amber);}
+.form-eyebrow::before{content:'';width:20px;height:2px;background:var(--red);}
 
-.hero-title{
-  font-family:'Fraunces',serif;
-  font-size:clamp(1.8rem,3vw,2.8rem);
-  font-weight:900;line-height:1;
-  margin-bottom:8px;letter-spacing:-1px;
+.form-title{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(2rem,3.5vw,3.2rem);
+  font-weight:900;line-height:.95;
+  color:var(--white);
+  text-transform:uppercase;letter-spacing:-1px;
+  margin-bottom:6px;
 }
-.hero-title em{font-style:italic;color:var(--amber);font-weight:300;}
+.form-title em{color:var(--red);font-style:normal;}
 
-.hero-sub{font-size:.88rem;color:rgba(255,255,255,.48);line-height:1.65;margin-bottom:22px;max-width:340px;}
+.form-sub{font-size:.88rem;color:rgba(255,255,255,.42);line-height:1.6;margin-bottom:22px;max-width:340px;}
 
 /* mini stats */
-.mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:22px;}
-.ms{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:10px 8px;text-align:center;}
-.ms-val{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:900;color:var(--amber);display:block;}
-.ms-lbl{font-size:.6rem;color:rgba(255,255,255,.32);text-transform:uppercase;letter-spacing:.8px;margin-top:2px;line-height:1.3;}
+.mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:24px;}
+.ms{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  border-top:2px solid var(--red);
+  border-radius:2px;padding:12px 10px;text-align:center;
+}
+.ms-val{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:800;color:var(--red);display:block;letter-spacing:.5px;}
+.ms-lbl{font-size:.6rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.8px;margin-top:2px;line-height:1.3;}
 
 /* amount */
-.flabel{font-size:.62rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.32);margin-bottom:7px;display:block;}
+.flabel{font-size:.62rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:7px;display:block;}
 .amount-wrap{position:relative;margin-bottom:12px;}
-.amount-prefix{position:absolute;left:15px;top:50%;transform:translateY(-50%);font-family:'Fraunces',serif;font-size:1.4rem;font-weight:700;color:var(--amber);pointer-events:none;}
+.amount-prefix{
+  position:absolute;left:15px;top:50%;transform:translateY(-50%);
+  font-family:'Barlow Condensed',sans-serif;font-size:1.5rem;font-weight:800;
+  color:var(--red);pointer-events:none;
+}
 #donationAmount{
-  width:100%;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.13);
-  border-radius:10px;padding:16px 16px 16px 48px;
-  font-family:'Fraunces',serif;font-size:1.8rem;font-weight:700;color:#fff;
-  outline:none;transition:border-color .2s;-moz-appearance:textfield;
+  width:100%;
+  background:rgba(255,255,255,.06);
+  border:1.5px solid rgba(255,255,255,.12);
+  border-radius:2px;
+  padding:16px 16px 16px 48px;
+  font-family:'Barlow Condensed',sans-serif;font-size:2rem;font-weight:800;
+  color:var(--white);outline:none;transition:border-color .2s;
+  -moz-appearance:textfield;letter-spacing:.5px;
 }
 #donationAmount::-webkit-outer-spin-button,#donationAmount::-webkit-inner-spin-button{-webkit-appearance:none;}
-#donationAmount:focus{border-color:var(--amber);}
-#donationAmount::placeholder{color:rgba(255,255,255,.14);font-size:1.4rem;}
+#donationAmount:focus{border-color:var(--red);}
+#donationAmount::placeholder{color:rgba(255,255,255,.12);font-size:1.5rem;}
 
 .quick-amounts{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:18px;}
 .qa{
-  background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.11);
-  border-radius:7px;padding:9px 4px;
-  font-family:'Instrument Sans',sans-serif;font-size:.78rem;font-weight:600;
-  color:rgba(255,255,255,.52);cursor:pointer;transition:all .15s;text-align:center;
+  background:rgba(255,255,255,.05);
+  border:1.5px solid rgba(255,255,255,.1);
+  border-radius:2px;padding:9px 4px;
+  font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:700;
+  letter-spacing:.5px;
+  color:rgba(255,255,255,.45);cursor:pointer;transition:all .15s;text-align:center;
 }
-.qa:hover{background:rgba(232,151,58,.15);border-color:var(--amber);color:var(--amber);}
-.qa.active{background:var(--amber);border-color:var(--amber);color:var(--dark);}
+.qa:hover{background:rgba(232,24,27,.2);border-color:var(--red);color:var(--red);}
+.qa.active{background:var(--red);border-color:var(--red);color:var(--white);}
 
 .divider{height:1px;background:rgba(255,255,255,.07);margin:16px 0;}
 
 /* fields */
 .ff{margin-bottom:10px;}
 .ff input{
-  width:100%;background:rgba(255,255,255,.06);
+  width:100%;
+  background:rgba(255,255,255,.05);
   border:1.5px solid rgba(255,255,255,.1);
-  border-radius:9px;padding:12px 15px;
-  font-family:'Instrument Sans',sans-serif;font-size:.9rem;
-  color:#fff;outline:none;transition:border-color .2s;
+  border-radius:2px;padding:13px 15px;
+  font-family:'Barlow',sans-serif;font-size:.9rem;
+  color:var(--white);outline:none;transition:border-color .2s;
 }
-.ff input::placeholder{color:rgba(255,255,255,.24);}
-.ff input:focus{border-color:var(--amber);}
+.ff input::placeholder{color:rgba(255,255,255,.22);}
+.ff input:focus{border-color:var(--red);}
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
 
 .submit-btn{
   width:100%;
-  background:linear-gradient(135deg,var(--earth) 0%,var(--amber) 100%);
-  border:none;border-radius:10px;padding:17px;
-  font-family:'Instrument Sans',sans-serif;font-size:.98rem;font-weight:600;
-  color:#fff;cursor:pointer;transition:opacity .2s,transform .2s;
+  background:var(--red);
+  border:none;border-radius:2px;padding:18px;
+  font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:800;
+  letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--white);cursor:pointer;
+  transition:background .2s,transform .2s;
   display:flex;align-items:center;justify-content:center;gap:10px;
   margin-top:16px;
-  box-shadow:0 6px 28px rgba(196,98,45,.35);
 }
-.submit-btn:hover:not(:disabled){opacity:.9;transform:translateY(-2px);}
-.submit-btn:disabled{opacity:.5;cursor:not-allowed;}
-.secure{display:flex;align-items:center;justify-content:center;gap:6px;font-size:.68rem;color:rgba(255,255,255,.22);margin-top:10px;}
-.form-err{background:rgba(220,50,50,.15);border:1px solid rgba(220,50,50,.3);border-radius:8px;padding:10px 13px;font-size:.8rem;color:#ff9090;margin-top:8px;display:none;}
+.submit-btn:hover:not(:disabled){background:var(--red-dark);transform:translateY(-1px);}
+.submit-btn:disabled{opacity:.45;cursor:not-allowed;}
+.secure{display:flex;align-items:center;justify-content:center;gap:6px;font-size:.67rem;color:rgba(255,255,255,.2);margin-top:10px;}
+.form-err{background:rgba(232,24,27,.12);border:1px solid rgba(232,24,27,.3);border-radius:2px;padding:10px 13px;font-size:.8rem;color:#ff8a80;margin-top:8px;display:none;}
 .form-err.show{display:block;}
 
 /* ══ STATS STRIP ══ */
 .proof{
   display:grid;grid-template-columns:repeat(4,1fr);
-  background:var(--earth);
+  background:var(--red);
 }
-.proof-item{text-align:center;padding:22px 12px;border-right:1px solid rgba(255,255,255,.12);}
+.proof-item{
+  text-align:center;padding:24px 12px;
+  border-right:1px solid rgba(255,255,255,.15);
+}
 .proof-item:last-child{border-right:none;}
-.proof-val{font-family:'Fraunces',serif;font-size:1.8rem;font-weight:900;color:#fff;display:block;}
-.proof-lbl{font-size:.65rem;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:1.5px;margin-top:4px;}
+.proof-val{font-family:'Barlow Condensed',sans-serif;font-size:2rem;font-weight:900;color:var(--white);display:block;letter-spacing:.5px;}
+.proof-lbl{font-size:.65rem;color:rgba(255,255,255,.65);text-transform:uppercase;letter-spacing:1.5px;margin-top:4px;}
 
-/* ══ PHOTO STRIP 3 fotos ══ */
-.photo-strip{display:grid;grid-template-columns:1fr 1fr 1fr;height:260px;gap:2px;}
-.photo-strip img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.75) saturate(.9);transition:filter .35s,transform .35s;}
-.photo-strip img:hover{filter:brightness(.95) saturate(1.05);transform:scale(1.02);}
+/* ══ VIDEO SECTION ══ */
+.videos-section{background:var(--black);padding:64px 5vw;}
+.section-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:32px;flex-wrap:wrap;gap:12px;}
+.section-tag{font-family:'Barlow Condensed',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:8px;}
+.section-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:900;color:var(--white);text-transform:uppercase;letter-spacing:-1px;line-height:1;}
 
-/* ══ BOTTOM: impacto + depoimentos ══ */
-.bottom{display:grid;grid-template-columns:1fr 1fr;color:var(--dark);}
-.impact-col{padding:56px 5vw;background:var(--cream);}
-.why-col{padding:56px 5vw;background:var(--sand);}
+.video-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3px;}
+.video-slot{
+  position:relative;overflow:hidden;background:#111;
+  aspect-ratio:16/9;cursor:pointer;
+}
+.video-slot.big{grid-row:span 2;aspect-ratio:auto;}
+.video-slot video{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.7);}
+.video-slot-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,.7) 0%,transparent 50%);
+  display:flex;align-items:flex-end;padding:16px;
+}
+.video-slot-overlay p{font-family:'Barlow Condensed',sans-serif;font-size:.82rem;font-weight:600;color:rgba(255,255,255,.8);text-transform:uppercase;letter-spacing:1px;}
+.video-play{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:48px;height:48px;
+  background:rgba(232,24,27,.9);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;color:#fff;
+  transition:transform .2s,background .2s;
+  padding-left:3px;
+}
+.video-slot:hover .video-play{transform:translate(-50%,-50%) scale(1.1);background:var(--red);}
 
-.col-tag{font-size:.65rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--earth);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
-.col-tag::after{content:'';flex:1;height:1px;background:var(--earth);opacity:.2;}
-.col-title{font-family:'Fraunces',serif;font-size:clamp(1.4rem,2.2vw,1.9rem);font-weight:900;line-height:1.15;margin-bottom:16px;letter-spacing:-.5px;}
+/* ══ IMPACT + DEPOIMENTOS ══ */
+.bottom{display:grid;grid-template-columns:1fr 1fr;}
+.impact-col{padding:60px 5vw;background:var(--gray);}
+.why-col{padding:60px 5vw;background:var(--white);}
+
+.col-tag{font-family:'Barlow Condensed',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:10px;}
+.col-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(1.4rem,2.2vw,1.9rem);font-weight:900;text-transform:uppercase;line-height:1;letter-spacing:-.5px;margin-bottom:14px;}
 .col-text{font-size:.88rem;color:var(--muted);line-height:1.8;margin-bottom:24px;}
 
-.ic-list{display:flex;flex-direction:column;gap:10px;}
-.ic{display:flex;align-items:flex-start;gap:14px;background:#fff;border-radius:10px;padding:16px;border:1px solid #e8ddd0;}
-.ic-val{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:900;color:var(--earth);flex-shrink:0;min-width:56px;}
+.ic-list{display:flex;flex-direction:column;gap:8px;}
+.ic{display:flex;align-items:flex-start;gap:14px;background:var(--white);border-radius:2px;padding:16px;border-left:3px solid var(--red);}
+.ic-val{font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:900;color:var(--red);flex-shrink:0;min-width:56px;letter-spacing:.5px;}
 .ic-lbl{font-size:.82rem;color:var(--muted);line-height:1.5;padding-top:2px;}
 
-.quote-block{background:var(--dark);border-radius:12px;padding:22px;margin-bottom:18px;}
-.quote-block p{font-family:'Fraunces',serif;font-style:italic;font-size:.95rem;color:rgba(255,255,255,.85);line-height:1.65;}
-.quote-block span{font-size:.68rem;color:rgba(255,255,255,.28);margin-top:10px;display:block;letter-spacing:1px;}
+.quote-block{background:var(--black);border-radius:2px;padding:22px;margin-bottom:18px;border-left:3px solid var(--red);}
+.quote-block p{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-size:1rem;color:rgba(255,255,255,.82);line-height:1.6;font-weight:500;}
+.quote-block span{font-size:.68rem;color:rgba(255,255,255,.28);margin-top:10px;display:block;letter-spacing:1px;text-transform:uppercase;}
 
-.test-grid{display:flex;flex-direction:column;gap:12px;}
-.tcard{background:#fff;border-radius:10px;padding:18px;border:1px solid #e8ddd0;}
-.tcard-stars{color:var(--amber);font-size:.82rem;margin-bottom:7px;}
+.test-grid{display:flex;flex-direction:column;gap:10px;}
+.tcard{background:var(--gray);border-radius:2px;padding:18px;border-top:2px solid var(--red);}
+.tcard-stars{color:var(--red);font-size:.82rem;margin-bottom:7px;}
 .tcard-text{font-size:.8rem;color:var(--muted);line-height:1.65;margin-bottom:10px;font-style:italic;}
 .tcard-author{display:flex;align-items:center;gap:9px;}
-.tcard-av{width:32px;height:32px;border-radius:50%;background:var(--earth);display:flex;align-items:center;justify-content:center;font-size:.8rem;color:#fff;font-weight:700;flex-shrink:0;}
-.tcard-name{font-size:.8rem;font-weight:600;color:var(--dark);}
+.tcard-av{width:32px;height:32px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:.8rem;color:#fff;font-weight:700;flex-shrink:0;}
+.tcard-name{font-size:.82rem;font-weight:600;color:var(--text);}
 .tcard-city{font-size:.68rem;color:var(--muted);}
 
 /* ══ FOOTER ══ */
 footer{
-  background:var(--dark);
+  background:var(--black);
   padding:28px 5vw;
   display:flex;align-items:center;justify-content:space-between;
   flex-wrap:wrap;gap:14px;
-  border-top:1px solid rgba(255,255,255,.05);
+  border-top:3px solid var(--red);
 }
-.footer-logo{display:flex;align-items:center;gap:10px;}
-.footer-logo img{width:44px;height:44px;object-fit:contain;border-radius:8px;}
-.footer-logo-name{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:900;color:var(--amber);}
+.footer-logo{display:flex;align-items:center;gap:12px;}
+.footer-logo img{height:36px;object-fit:contain;filter:brightness(0) invert(1);}
+.footer-logo-name{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:800;color:var(--white);text-transform:uppercase;letter-spacing:.5px;}
 footer p{font-size:.72rem;color:rgba(255,255,255,.22);}
 
 /* ══ PIX MODAL ══ */
-.overlay{position:fixed;inset:0;background:rgba(10,8,4,.9);backdrop-filter:blur(8px);z-index:1000;display:none;align-items:center;justify-content:center;padding:16px;}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.92);backdrop-filter:blur(6px);z-index:1000;display:none;align-items:center;justify-content:center;padding:16px;}
 .overlay.open{display:flex;}
-.pix-modal{background:var(--cream);border-radius:18px;padding:40px 36px;max-width:440px;width:100%;text-align:center;box-shadow:0 32px 100px rgba(0,0,0,.5);animation:popIn .3s cubic-bezier(.34,1.56,.64,1) both;color:var(--dark);}
-@keyframes popIn{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
-.pix-icon{width:60px;height:60px;background:var(--earth);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.7rem;margin:0 auto 16px;}
-.pix-title{font-family:'Fraunces',serif;font-size:1.6rem;font-weight:900;margin-bottom:7px;}
+.pix-modal{background:var(--white);border-radius:3px;padding:40px 36px;max-width:440px;width:100%;text-align:center;box-shadow:0 32px 100px rgba(0,0,0,.5);animation:popIn .3s cubic-bezier(.34,1.56,.64,1) both;border-top:4px solid var(--red);}
+@keyframes popIn{from{transform:scale(.88);opacity:0}to{transform:scale(1);opacity:1}}
+.pix-icon{width:58px;height:58px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin:0 auto 16px;}
+.pix-title{font-family:'Barlow Condensed',sans-serif;font-size:1.8rem;font-weight:900;text-transform:uppercase;margin-bottom:6px;letter-spacing:.5px;}
 .pix-sub{font-size:.85rem;color:var(--muted);margin-bottom:20px;line-height:1.5;}
-.pix-box{background:#f0e6d3;border:2px dashed var(--earth);border-radius:10px;padding:14px;font-family:monospace;font-size:.68rem;color:#4a3520;word-break:break-all;line-height:1.5;max-height:100px;overflow-y:auto;margin-bottom:12px;text-align:left;}
-.copy-btn{width:100%;background:var(--earth);color:#fff;border:none;border-radius:9px;padding:14px;font-family:'Instrument Sans',sans-serif;font-size:.9rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:8px;transition:background .2s;}
-.copy-btn:hover{background:#a84e22;}
-.tx-status{padding:10px 13px;border-radius:8px;font-size:.8rem;font-weight:500;margin-top:8px;}
-.tx-status.pending{background:#fff8e6;color:#7a5c00;}
-.tx-status.paid{background:#d1fae5;color:#065f46;}
-.tx-status.error{background:#fee2e2;color:#991b1b;}
-.modal-close{background:none;border:1.5px solid #d0c4b0;border-radius:8px;padding:10px;font-size:.82rem;color:var(--muted);cursor:pointer;width:100%;margin-top:8px;font-family:'Instrument Sans',sans-serif;transition:border-color .2s,color .2s;}
-.modal-close:hover{border-color:var(--earth);color:var(--earth);}
+.pix-box{background:#f5f5f5;border:2px dashed var(--red);border-radius:2px;padding:14px;font-family:monospace;font-size:.68rem;color:#333;word-break:break-all;line-height:1.5;max-height:100px;overflow-y:auto;margin-bottom:12px;text-align:left;}
+.copy-btn{width:100%;background:var(--red);color:#fff;border:none;border-radius:2px;padding:14px;font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:8px;transition:background .2s;}
+.copy-btn:hover{background:var(--red-dark);}
+.tx-status{padding:10px 13px;border-radius:2px;font-size:.8rem;font-weight:500;margin-top:8px;}
+.tx-status.pending{background:#fff3e0;color:#e65100;}
+.tx-status.paid{background:#e8f5e9;color:#1b5e20;}
+.tx-status.error{background:#ffebee;color:#b71c1c;}
+.modal-close{background:none;border:1.5px solid var(--gray-mid);border-radius:2px;padding:10px;font-size:.82rem;color:var(--muted);cursor:pointer;width:100%;margin-top:8px;font-family:'Barlow',sans-serif;transition:border-color .2s,color .2s;}
+.modal-close:hover{border-color:var(--red);color:var(--red);}
 
 .spin{width:16px;height:16px;border:2.5px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:rot .7s linear infinite;display:inline-block;}
 @keyframes rot{to{transform:rotate(360deg)}}
 
 /* ══ MOBILE ══ */
 @media(max-width:768px){
-  /* Hero vira coluna única: foto em cima, form embaixo */
-  .hero{
-    grid-template-columns:1fr;
-    grid-template-rows:auto auto;
-    min-height:auto;
-  }
-  .hero-left{
-    height:55vw;
-    min-height:220px;
-    max-height:320px;
-  }
-  /* no mobile a logo fica menor */
-  .hero-logo img{width:48px;height:48px;}
-  .hero-logo-name{font-size:1.1rem;}
-  .urgency-badge{font-size:.62rem;padding:6px 10px;}
-  .photo-caption{display:none;} /* esconde em telas pequenas */
+  header{padding:0 4vw;height:60px;}
+  .header-logo img{height:32px;}
+  .header-logo-text{font-size:1.05rem;}
+  .header-cta{font-size:.82rem;padding:8px 16px;}
 
-  .hero-right{
-    padding:32px 20px 40px;
-  }
-  .hero-sub{max-width:100%;}
-  .mini-stats{grid-template-columns:repeat(3,1fr);gap:6px;}
-  .ms-val{font-size:.95rem;}
-  .ms-lbl{font-size:.55rem;}
+  .hero{grid-template-columns:1fr;grid-template-rows:auto auto;min-height:auto;}
+  .hero-media{height:52vw;min-height:200px;max-height:300px;}
+  .hero-form{padding:32px 20px 40px;}
+  .form-sub{max-width:100%;}
+  .mini-stats{gap:6px;}
+  .ms-val{font-size:1rem;}
+  .frow{grid-template-columns:1fr;}
+  #donationAmount{font-size:1.5rem;}
 
-  /* stats strip 2 colunas */
   .proof{grid-template-columns:1fr 1fr;}
   .proof-item{border-bottom:1px solid rgba(255,255,255,.1);}
   .proof-val{font-size:1.5rem;}
 
-  /* foto strip menor */
-  .photo-strip{height:140px;}
+  .video-grid{grid-template-columns:1fr;gap:2px;}
+  .video-slot.big{grid-row:span 1;}
+  .video-slot{aspect-ratio:16/9 !important;}
+  .videos-section{padding:40px 4vw;}
 
-  /* bottom vira coluna única */
   .bottom{grid-template-columns:1fr;}
-  .impact-col,.why-col{padding:40px 20px;}
+  .impact-col,.why-col{padding:40px 5vw;}
 
-  /* footer centralizado */
-  footer{flex-direction:column;align-items:center;text-align:center;padding:24px 20px;}
-
-  /* form fields full width */
-  .frow{grid-template-columns:1fr;}
-  #donationAmount{font-size:1.5rem;}
+  footer{flex-direction:column;align-items:center;text-align:center;padding:24px 4vw;}
 }
 
-@media(max-width:400px){
+@media(max-width:480px){
   .quick-amounts{grid-template-columns:repeat(3,1fr);}
-  .hero-left{height:60vw;}
-  .photo-strip{grid-template-columns:1fr 1fr 1fr;height:110px;}
+  .hero-media{height:58vw;}
   .proof{grid-template-columns:1fr 1fr;}
 }
 </style>
 </head>
 <body>
 
+<!-- ══ HEADER ══ -->
+<header>
+  <div class="header-logo">
+    <img src="msf_logo.png" alt="MSF"/>
+    <div class="header-logo-text">
+      Médicos Sem Fronteiras
+      <span>Doe e salve vidas</span>
+    </div>
+  </div>
+  <a href="#doar" class="header-cta">Doe Agora</a>
+</header>
+
 <!-- ══ HERO ══ -->
-<section class="hero">
+<section class="hero" id="doar">
 
-  <!-- ESQUERDA / TOPO no mobile: foto -->
-  <div class="hero-left">
-    <img class="bg" src="foto2.png" alt="Criança africana precisando de ajuda"/>
-    <div class="hero-left-overlay"></div>
-
-    <div class="hero-logo">
-      <img src="logo.png" alt="África Viva"/>
-      <div>
-        <div class="hero-logo-name">África Viva</div>
-        <div class="hero-logo-sub">ONG Humanitária</div>
-      </div>
-    </div>
-
-
-
-    <div class="photo-caption">
-      <p>"Ela tem 2 anos e nunca tomou uma vacina. Com R$50 sua vida muda hoje."</p>
-      <span>— África Subsaariana, 2024</span>
-    </div>
+  <!-- ESQUERDA / TOPO no mobile: vídeo -->
+  <div class="hero-media">
+    <!--
+      COMO ADICIONAR SEU VÍDEO:
+      Substitua "seu_video.mp4" pelo nome do seu arquivo de vídeo
+      e coloque o arquivo na pasta public/ junto com este index.html.
+      Exemplo: <source src="video_africa.mp4" type="video/mp4"/>
+    -->
+    <video autoplay muted loop playsinline>
+      <source src="video.mp4" type="video/mp4"/>
+    </video>
+    <div class="hero-media-overlay"></div>
+    <div class="media-label">Médicos Sem Fronteiras — Em campo agora</div>
   </div>
 
   <!-- DIREITA / BAIXO no mobile: form -->
-  <div class="hero-right">
-    <div class="hero-eyebrow">Doação via PIX — instantânea</div>
-    <h1 class="hero-title">
-      Salve uma vida<br/>
-      <em>agora mesmo.</em>
+  <div class="hero-form">
+    <div class="form-eyebrow">Doação via PIX — instantânea</div>
+    <h1 class="form-title">
+      SALVE UMA<br/>
+      VIDA <em>AGORA.</em>
     </h1>
-    <p class="hero-sub">257 milhões dormem com fome na África todo dia. Com R$10 você já muda isso.</p>
+    <p class="form-sub">Nossas equipes estão em campo hoje. Sua doação financia médicos, remédios e cirurgias de emergência.</p>
 
     <div class="mini-stats">
-      <div class="ms"><span class="ms-val">R$10</span><span class="ms-lbl">1 semana de comida</span></div>
-      <div class="ms"><span class="ms-val">R$50</span><span class="ms-lbl">vacina completa</span></div>
-      <div class="ms"><span class="ms-val">100%</span><span class="ms-lbl">vai para África</span></div>
+      <div class="ms"><span class="ms-val">70+</span><span class="ms-lbl">países atendidos</span></div>
+      <div class="ms"><span class="ms-val">R$10</span><span class="ms-lbl">já salva vidas</span></div>
+      <div class="ms"><span class="ms-val">100%</span><span class="ms-lbl">vai ao campo</span></div>
     </div>
 
     <label class="flabel">quanto você quer doar?</label>
@@ -354,7 +417,7 @@ footer p{font-size:.72rem;color:rgba(255,255,255,.22);}
     <div class="form-err" id="formErr"></div>
 
     <button class="submit-btn" id="submitBtn" onclick="submitDonation()">
-      🌍 Gerar PIX e Salvar Vidas
+      ❤️ Gerar PIX e Salvar Vidas
     </button>
     <p class="secure">🔒 Pagamento seguro via SyncPay · SSL 256-bit</p>
   </div>
@@ -362,54 +425,94 @@ footer p{font-size:.72rem;color:rgba(255,255,255,.22);}
 
 <!-- ══ STATS ══ -->
 <div class="proof">
-  <div class="proof-item"><span class="proof-val">257M</span><span class="proof-lbl">com fome diária</span></div>
-  <div class="proof-item"><span class="proof-val">3,4M</span><span class="proof-lbl">crianças morrem/ano</span></div>
-  <div class="proof-item"><span class="proof-val">400M</span><span class="proof-lbl">extrema pobreza</span></div>
-  <div class="proof-item"><span class="proof-val">100%</span><span class="proof-lbl">transparência</span></div>
+  <div class="proof-item"><span class="proof-val">11M+</span><span class="proof-lbl">pacientes por ano</span></div>
+  <div class="proof-item"><span class="proof-val">70+</span><span class="proof-lbl">países com equipes</span></div>
+  <div class="proof-item"><span class="proof-val">45mil</span><span class="proof-lbl">profissionais de saúde</span></div>
+  <div class="proof-item"><span class="proof-val">100%</span><span class="proof-lbl">independente</span></div>
 </div>
 
-<!-- ══ 3 FOTOS ══ -->
-<div class="photo-strip">
-  <img src="foto1.png" alt="Criança africana no deserto"/>
-  <img src="foto2.png" alt="Criança desnutrida recebendo ajuda"/>
-  <img src="foto3.png" alt="Crianças buscando água"/>
-</div>
+<!-- ══ VÍDEOS ══ -->
+<section class="videos-section">
+  <div class="section-header">
+    <div>
+      <div class="section-tag">No campo</div>
+      <div class="section-title">Veja onde sua doação chega</div>
+    </div>
+  </div>
+
+  <!--
+    COMO ADICIONAR SEUS VÍDEOS:
+    1. Coloque os arquivos .mp4 na pasta public/
+    2. Substitua "video1.mp4", "video2.mp4", "video3.mp4" pelos seus nomes
+    3. O texto em cada overlay é a legenda do vídeo
+  -->
+  <div class="video-grid">
+    <div class="video-slot big">
+      <video autoplay muted loop playsinline>
+        <source src="video1.mp4" type="video/mp4"/>
+      </video>
+      <div class="video-slot-overlay"><p>Missões de emergência — África</p></div>
+      <div class="video-play">▶</div>
+    </div>
+    <div class="video-slot">
+      <video autoplay muted loop playsinline>
+        <source src="video2.mp4" type="video/mp4"/>
+      </video>
+      <div class="video-slot-overlay"><p>Cuidados pediátricos</p></div>
+      <div class="video-play">▶</div>
+    </div>
+    <div class="video-slot">
+      <video autoplay muted loop playsinline>
+        <source src="video3.mp4" type="video/mp4"/>
+      </video>
+      <div class="video-slot-overlay"><p>Distribuição de alimentos</p></div>
+      <div class="video-play">▶</div>
+    </div>
+    <div class="video-slot">
+      <video autoplay muted loop playsinline>
+        <source src="video4.mp4" type="video/mp4"/>
+      </video>
+      <div class="video-slot-overlay"><p>Água potável — Sudão</p></div>
+      <div class="video-play">▶</div>
+    </div>
+  </div>
+</section>
 
 <!-- ══ IMPACTO + DEPOIMENTOS ══ -->
 <div class="bottom">
   <div class="impact-col">
-    <div class="col-tag">O que sua doação faz</div>
-    <h2 class="col-title">Cada real tem um destino real</h2>
-    <p class="col-text">Nenhum centavo se perde. Todo valor vai direto para alimentação, vacinas e água potável.</p>
+    <div class="col-tag">O que sua doação financia</div>
+    <h2 class="col-title">Cada real vai ao campo</h2>
+    <p class="col-text">Sem intermediários. Sem burocracia. Seu dinheiro financia equipes médicas, medicamentos e estrutura hospitalar em zonas de crise.</p>
     <div class="ic-list">
-      <div class="ic"><div class="ic-val">R$10</div><div class="ic-lbl">Alimentação por uma semana para uma criança desnutrida</div></div>
-      <div class="ic"><div class="ic-val">R$25</div><div class="ic-lbl">Kit de higiene + tratamento contra parasitas</div></div>
-      <div class="ic"><div class="ic-val">R$50</div><div class="ic-lbl">Vacinação completa contra doenças evitáveis</div></div>
-      <div class="ic"><div class="ic-val">R$100</div><div class="ic-lbl">Um mês de alimentação + acompanhamento nutricional</div></div>
+      <div class="ic"><div class="ic-val">R$10</div><div class="ic-lbl">Kit de primeiros socorros para uma pessoa em zona de conflito</div></div>
+      <div class="ic"><div class="ic-val">R$25</div><div class="ic-lbl">Vacinas para 5 crianças contra doenças evitáveis</div></div>
+      <div class="ic"><div class="ic-val">R$50</div><div class="ic-lbl">Consulta médica completa + medicamentos essenciais</div></div>
+      <div class="ic"><div class="ic-val">R$100</div><div class="ic-lbl">Cirurgia de emergência em campo — instrumental e insumos</div></div>
     </div>
   </div>
 
   <div class="why-col">
     <div class="col-tag">Quem já doou</div>
-    <h2 class="col-title">Pessoas reais, histórias reais</h2>
+    <h2 class="col-title">Pessoas reais, vidas salvas</h2>
     <div class="quote-block">
-      <p>"1 em cada 3 crianças na África tem crescimento prejudicado pela desnutrição. Muitas não chegam aos 5 anos."</p>
-      <span>— OMS, Relatório Mundial de Saúde 2024</span>
+      <p>"Médicos Sem Fronteiras opera em mais de 70 países, tratando mais de 11 milhões de pacientes por ano em condições extremas."</p>
+      <span>— Relatório de atividades MSF, 2024</span>
     </div>
     <div class="test-grid">
       <div class="tcard">
         <div class="tcard-stars">★★★★★</div>
-        <p class="tcard-text">"Doei R$50 e em segundos recebi a confirmação. Simples e que realmente ajuda."</p>
+        <p class="tcard-text">"Doei R$50 em segundos pelo PIX. Saber que está salvando vidas reais faz toda diferença."</p>
         <div class="tcard-author"><div class="tcard-av">M</div><div><div class="tcard-name">Marina S.</div><div class="tcard-city">São Paulo, SP</div></div></div>
       </div>
       <div class="tcard">
         <div class="tcard-stars">★★★★★</div>
-        <p class="tcard-text">"Faço doações mensais. Nunca pensei que R$30/mês pudesse impactar tanto."</p>
+        <p class="tcard-text">"Faço doações mensais há 2 anos. É a causa em que mais acredito. Recomendo a todos."</p>
         <div class="tcard-author"><div class="tcard-av">R</div><div><div class="tcard-name">Rafael C.</div><div class="tcard-city">Belo Horizonte, MG</div></div></div>
       </div>
       <div class="tcard">
         <div class="tcard-stars">★★★★★</div>
-        <p class="tcard-text">"Fizemos a doação em família. Um ato simples que ensina muito às crianças."</p>
+        <p class="tcard-text">"Processo rápido, transparente e que realmente chega em quem precisa. Muito fácil de usar."</p>
         <div class="tcard-author"><div class="tcard-av">A</div><div><div class="tcard-name">Ana Paula L.</div><div class="tcard-city">Curitiba, PR</div></div></div>
       </div>
     </div>
@@ -419,21 +522,21 @@ footer p{font-size:.72rem;color:rgba(255,255,255,.22);}
 <!-- ══ FOOTER ══ -->
 <footer>
   <div class="footer-logo">
-    <img src="logo.png" alt="África Viva"/>
-    <span class="footer-logo-name">África Viva</span>
+    <img src="msf_logo.png" alt="MSF"/>
+    <span class="footer-logo-name">Médicos Sem Fronteiras</span>
   </div>
-  <p>© 2025 África Viva · ONG Humanitária</p>
-  <p>100% do valor vai para comunidades africanas</p>
+  <p>© 2025 Médicos Sem Fronteiras · Organização Humanitária Internacional</p>
+  <p>100% do valor doado vai diretamente para as missões em campo</p>
 </footer>
 
 <!-- ══ PIX MODAL ══ -->
 <div class="overlay" id="overlay">
   <div class="pix-modal">
-    <div class="pix-icon">🌍</div>
-    <h2 class="pix-title">PIX gerado!</h2>
+    <div class="pix-icon">❤️</div>
+    <h2 class="pix-title">PIX Gerado!</h2>
     <p class="pix-sub">Copie o código e pague no app do seu banco. Confirmado em segundos.</p>
     <div class="pix-box" id="pixCode">Aguarde...</div>
-    <button class="copy-btn" id="copyBtn" onclick="copyCode()">📋 Copiar código PIX</button>
+    <button class="copy-btn" id="copyBtn" onclick="copyCode()">📋 Copiar Código PIX</button>
     <div class="tx-status pending" id="txStatus">⏳ Aguardando pagamento...</div>
     <button class="modal-close" onclick="closeModal()">Fechar</button>
   </div>
@@ -498,14 +601,14 @@ footer p{font-size:.72rem;color:rgba(255,255,255,.22);}
       showError('❌ '+err.message);
     }finally{
       btn.disabled=false;
-      btn.innerHTML='🌍 Gerar PIX e Salvar Vidas';
+      btn.innerHTML='❤️ Gerar PIX e Salvar Vidas';
     }
   }
   function copyCode(){
     navigator.clipboard.writeText(document.getElementById('pixCode').textContent).then(()=>{
       const btn=document.getElementById('copyBtn');
       btn.textContent='✅ Copiado!';
-      setTimeout(()=>{btn.innerHTML='📋 Copiar código PIX';},2500);
+      setTimeout(()=>{btn.innerHTML='📋 Copiar Código PIX';},2500);
     });
   }
   function closeModal(){
@@ -523,7 +626,7 @@ footer p{font-size:.72rem;color:rgba(255,255,255,.22);}
         const s=(data.status||'').toLowerCase();
         const el=document.getElementById('txStatus');
         if(s==='paid'||s==='completed'||s==='approved'){
-          el.textContent='✅ Pagamento confirmado! Obrigado! 🌍';
+          el.textContent='✅ Pagamento confirmado! Obrigado! ❤️';
           el.className='tx-status paid';clearInterval(pollTimer);
         }else if(s==='failed'||s==='expired'){
           el.textContent='❌ PIX expirado. Feche e tente novamente.';
